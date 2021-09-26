@@ -1,0 +1,4 @@
+name: d8sandbox
+recipe: drupal8
+config:
+  webroot: web
