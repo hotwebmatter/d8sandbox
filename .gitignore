@@ -1,0 +1,25 @@
+# Drupal
+/web/core/
+/web/libraries/
+/web/modules/contrib/
+/web/profiles/contrib/
+/web/themes/contrib/
+/vendor/
+
+# Ignore paths that contain user-generated content.
+/web/files/
+/web/sites/*/files/
+/web/sites/*/private/
+
+# Ignore local settings.
+/web/sites/*/settings.local.php
+
+# Ignore theme build tooling.
+/web/themes/**/node_modules/
+
+# Ignore git submodules (no longer needed if ignoring contrib and vendor).
+# /**/.git/
+
+# Added automatically during composer install.
+/.editorconfig
+/.gitattributes
