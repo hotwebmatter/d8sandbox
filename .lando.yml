@@ -2,3 +2,43 @@ name: d8sandbox
 recipe: drupal8
 config:
   webroot: web
+  composer_version: 2-latest
+  php: '7.3'
+
+events:
+  # Clear cache after a database import
+  post-db-import:
+    - appserver: cd $LANDO_WEBROOT && drush cache-rebuild --yes
+
+services:
+  appserver:
+    build:
+      - composer install
+
+  nodejs:
+    type: node:12
+    globals:
+      gulp-cli: latest
+    build:
+      # - echo "Attempting cd /app/docroot/themes/custom/aspenchallenge && npm install"
+      # - cd /app/docroot/themes/custom/aspenchallenge && npm install
+    run:
+      # - echo "Attempting cd /app/docroot/themes/custom/aspenchallenge && grunt sass"
+      # - cd /app/docroot/themes/custom/aspenchallenge && grunt sass
+
+tooling:
+  drupal:
+    service: appserver
+    cmd: drupal
+  drush:
+    service: appserver
+    cmd: drush
+    env:
+      DRUSH_OPTIONS_URI: d8sandbox.lndo.site
+  node:
+    service: nodejs
+    # dir: /app/docroot/themes/custom/aspenchallenge
+  npm:
+    service: nodejs
+    # dir: /app/docroot/themes/custom/aspenchallenge
+  xdebug: true|false
